@@ -57,3 +57,108 @@ app.get('/allProduct', (req, res) => {
         res.send(result)
     })
 })
+
+
+// =================================
+//        UPDATE/EDIT METHOD
+// =================================
+app.patch('/updateProduct/:id', (req, res) => {
+    const idParam = req.params.id;
+    Product.findById(idParam, (err, product) => {
+        const updatedProduct = {
+            name: req.body.name,
+            price: req.body.price,
+            description: req.body.description,
+            img_url: req.body.img_url
+        }
+        Product.updateOne({
+            _id: idParam
+        }, updatedProduct)
+            .then(result => {
+                res.send(result);
+            })
+            .catch(err => res.send(err));
+    });
+});
+
+//editing product via bootstrap madal 
+//the :id is a special syntax that can grab the id from a variable in the frontend 
+app.get('/product/:id', (req, res) => {
+    const productId = req.params.id
+    console.log(productId)
+    Product.findById(productId, (err, product) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(product);
+        }
+    })
+})
+
+
+
+// =================================
+//           DELETE METHOD
+// =================================
+
+// set up the delete route
+// This route will only be actived if someone goes to it
+// you can go to it using AJAX
+app.delete('/deleteProduct/:id', (req, res) => {
+    // the request varible here (req) contains the ID, and you can access it using req.param.id
+    const productId = req.params.id;
+    console.log("The following product was deleted:")
+    console.log(productId);
+    // findById() looks up a piece of data based on the id aurgument which we give it first
+    // we're giving it the product ID vairible
+    //  if it successful it will run a function
+    // then function will provide us the details on that project or an error if it doesn't work
+    Product.findById(productId, (err, product) => {
+        if (err) {
+            console.log(err)
+        } else {
+            console.log(product);
+            Product.deleteOne({ _id: productId })
+                .then(() => {
+                    console.log("Success! Actually deleted from mongoDB")
+                    // res.send will end the process
+                    res.send(product)
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+        }
+
+    });
+});
+
+
+// =================================
+//        ADD PRODUCT METHOD
+// =================================
+
+// set up a route/endpoint which the frontend will access 
+// app.post will send data to the database 
+app.post(`/addProduct`, (req, res) => {
+    // create a new instance of the product schema 
+    const newProduct = new Product({
+        // give our new product the details we sent from the frontend 
+        _id: new mongoose.Types.ObjectId,
+        name: req.body.name,
+        price: req.body.price,
+        description: req.body.description,
+        img_url: req.body.img_url,
+    });
+    // to save the new product to the database
+    // use the variable declared above
+    newProduct.save()
+        .then((result) => {
+            console.log(`Added a new product successfully!`)
+            // return back to the frontend what just happened
+            res.send(result)
+        })
+        .catch((err) => {
+            console.log(`Error: ${err.message}`)
+        })
+});
+
