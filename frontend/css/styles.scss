@@ -3,9 +3,25 @@
     text-decoration: none;
     margin: 0;
     padding: 0;
-
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-body {
-    background-color: black;
+#result {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+img {
+    width: 90px;
+    height: auto;
+}
+
+.product-container {
+    width: 30%;
+    height: auto;
+    background-color: beige;
+    border: 2px solid rgb(67, 60, 60);
+    font-size: 12px;
+    text-align: center;
+    margin: 5px;
 }
