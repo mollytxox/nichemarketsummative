@@ -16,6 +16,7 @@ console.log(config)
 // Schemas
 // every schema needs a capital letter
 const Product = require("./models/product.js");
+const User = require("./models/user.js");
 
 // start our dependencies
 app.use(bodyParser.json())
@@ -162,3 +163,49 @@ app.post(`/addProduct`, (req, res) => {
         })
 });
 
+
+
+// =================================
+//        REGISTERING USERS
+// =================================
+app.post('/registerUser', (req, res) => { // Checking if user is in the DB already
+
+    User.findOne({ username: req.body.username }, (err, userResult) => {
+
+        if (userResult) {
+            // send back a string so we can validate the user
+            res.send('username exists');
+        } else {
+            const hash = bcrypt.hashSync(req.body.password); // Encrypt User Password
+            const user = new User({
+                _id: new mongoose.Types.ObjectId,
+                username: req.body.username,
+                password: hash,
+                profile_img_url: req.body.profile_img_url
+            });
+
+            user.save().then(result => { // Save to database and notify userResult
+                res.send(result);
+            }).catch(err => res.send(err));
+        } // Else
+    })
+}) // End of Registering a User
+
+
+// =================================
+//        LOGIN IN METHOD
+// =================================
+app.post('/loginUser', (req, res) => {
+    // firstly look for a user with that username
+    User.findOne({ username: req.body.username }, (err, userResult) => {
+        if (userResult) {
+            if (bcrypt.compareSync(req.body.password, userResult.password)) {
+                res.send(userResult);
+            } else {
+                res.send('not authorised');
+            } // inner if
+        } else {
+            res.send('user not found');
+        } // outer if
+    }) // Find one ends
+}); // end of post login
