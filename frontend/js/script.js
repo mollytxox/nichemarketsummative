@@ -51,6 +51,7 @@ let addNewProducts = () => {
                 price: priceInput.value,
                 description: descriptionInput.value,
                 img_url: imageURLInput.value,
+                createdby: sessionStorage.userID
             },
             success: () => {
                 console.log("A new product was added.");
@@ -74,7 +75,8 @@ let renderProducts = (products) => {
     console.log("the render products function is working");
     result.innerHTML = "";
     products.forEach((item) => {
-        result.innerHTML += `
+        if (item.createdby == sessionStorage.userID) {
+            result.innerHTML += `
         <div class="product-container" id="${item._id}">
             <h3>${item.name}</h3>
             <h3>$${item.price}</h3>
@@ -84,6 +86,16 @@ let renderProducts = (products) => {
             <i class="bi bi-pencil edit-button" data-bs-toggle="modal" data-bs-target="#editModal"></i>
         </div>
         `;
+        } else {
+            result.innerHTML += `
+        <div class="product-container" id="${item._id}">
+            <h3>${item.name}</h3>
+            <h3>$${item.price}</h3>
+            <h3>${item.description}</h3>
+            <img src="${item.img_url}"> 
+        </div>
+        `;
+        }
     });
 
     // running collect edit buttons function

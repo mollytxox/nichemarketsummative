@@ -149,6 +149,7 @@ app.post(`/addProduct`, (req, res) => {
         price: req.body.price,
         description: req.body.description,
         img_url: req.body.img_url,
+        createdby: req.body.createdby
     });
     // to save the new product to the database
     // use the variable declared above
