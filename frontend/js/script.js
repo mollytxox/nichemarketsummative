@@ -2,10 +2,10 @@ const result = document.getElementById('result');
 const goBtn = document.getElementById("go-button");
 
 // declare all our inputs
-const nameInput = document.getElementById("name-input");
-const priceInput = document.getElementById("price-input");
-const descriptionInput = document.getElementById("description-input");
-const imageURLInput = document.getElementById("image-url-input");
+// const nameInput = document.getElementById("name-input");
+// const priceInput = document.getElementById("price-input");
+// const descriptionInput = document.getElementById("description-input");
+// const imageURLInput = document.getElementById("image-url-input");
 
 
 // =================================
@@ -29,32 +29,39 @@ let showAllProduct = () => {
 };
 
 
+const addNewProductDiv = document.getElementById('add-product-div');
 // =================================
 //        ADD NEW PRODUCTS
 // =================================
-goBtn.onclick = () => {
-    $.ajax({
-        url: "http://localhost:3400/addProduct",
-        // use the post type to create data somewhere
-        // requesting to POST our data
-        type: "POST",
-        // we can send objects through to the backend, using the data argument
-        data: {
-            // the first property (i.e. the one on the left) called name has to be spelt exactly as the schema
-            name: nameInput.value,
-            price: priceInput.value,
-            description: descriptionInput.value,
-            img_url: imageURLInput.value,
-        },
-        success: () => {
-            console.log("A new product was added.");
-            showAllProduct();
-        },
-        error: () => {
-            console.log("Error: cannot reach the backend");
-        },
-    });
-};
+let addNewProducts = () => {
+    goBtn.onclick = () => {
+        const nameInput = document.getElementById("name-input");
+        const priceInput = document.getElementById("price-input");
+        const descriptionInput = document.getElementById("description-input");
+        const imageURLInput = document.getElementById("image-url-input");
+        $.ajax({
+            url: "http://localhost:3400/addProduct",
+            // use the post type to create data somewhere
+            // requesting to POST our data
+            type: "POST",
+            // we can send objects through to the backend, using the data argument
+            data: {
+                // the first property (i.e. the one on the left) called name has to be spelt exactly as the schema
+                name: nameInput.value,
+                price: priceInput.value,
+                description: descriptionInput.value,
+                img_url: imageURLInput.value,
+            },
+            success: () => {
+                console.log("A new product was added.");
+                showAllProduct();
+            },
+            error: () => {
+                console.log("Error: cannot reach the backend");
+            },
+        });
+    };
+}
 
 
 
@@ -226,7 +233,7 @@ let collectDeleteButtons = () => {
 showAllProduct();
 
 
-
+const postProductBtnDiv = document.getElementById('add-product-button');
 // ==============================================
 //      CHECK IF USER IS LOGGED IN OR NOT
 // ==============================================
@@ -239,13 +246,29 @@ let checkLogin = () => {
     if (sessionStorage.userID) {
         // console.log("You're logged in")
         // console.log(sessionStorage.userName)
+        addNewProducts();
         navContent = `
       <span id="username">${sessionStorage.userName}</span>
       <span id="dp" style="background-image: url('${sessionStorage.profileImg}')"></span>
       <a id="sign-out-button" href="#">Sign Out</a>
       `
+        addNewProductDiv.innerHTML = `
+      <form id="add-project-form" action="javascript:void(0)">
+      <label for="name-input">Product Name: </label>
+      <input id="name-input" name="name-input" type="text">
+      <label for="price-input">Product Price: </label>
+      <input id="price-input" name="price-input" type="text">
+      <label for="description-input">Product Description: </label>
+      <input id="description-input" name="description-input" type="text">
+      <label for="image-url-input">Product Image URL:</label>
+      <input id="image-url-input" name="image-url-input" type="text">
+  </form>
+      `
     }
     else {
+        postProductBtnDiv.innerHTML = `
+        <a href="login.html"><button id="go-button">Post New Product</button></a>
+        `
         navContent = `
       <a href="login.html">Login</a>
       <a href="signup.html">Signup</a>
