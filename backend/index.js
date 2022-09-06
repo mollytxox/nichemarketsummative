@@ -17,6 +17,7 @@ console.log(config)
 // every schema needs a capital letter
 const Product = require("./models/product.js");
 const User = require("./models/user.js");
+const Comment = require("./models/comment.js");
 
 // start our dependencies
 app.use(bodyParser.json())
@@ -210,3 +211,30 @@ app.post('/loginUser', (req, res) => {
         } // outer if
     }) // Find one ends
 }); // end of post login
+
+
+
+// =================================
+//        ADD COMMENT METHOD
+// =================================
+
+app.post('/postComment', (req, res) => {
+    const newComment = new Comment({
+        _id: new mongoose.Types.ObjectId,
+        text: req.body.text,
+        product_id: req.body.product_id
+    })
+    // save (or post) this comment to the MongoDB 
+    newComment.save()
+        .then(result => {
+            Product.findByIdAndUpdate(
+                // first parameter is the id of the coffee you want to find 
+                newComment.product_id,
+                { $push: { comments: newComment } }
+            ).then(result => {
+                res.send(newComment)
+            }).catch(error => {
+                res.send(error)
+            })
+        })
+})
