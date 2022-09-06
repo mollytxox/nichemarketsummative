@@ -65,7 +65,6 @@ let addNewProducts = () => {
 }
 
 
-
 // =================================
 //        RENDER PRODUCTS
 // =================================
@@ -75,6 +74,20 @@ let renderProducts = (products) => {
     console.log("the render products function is working");
     result.innerHTML = "";
     products.forEach((item) => {
+        //  RENDER COMMENTS
+        let renderComments = () => {
+            if (item.comments.length > 0) {
+                let allComments = "";
+                item.comments.forEach((comment) => {
+                    console.log(comment.text);
+                    allComments += `<li>${comment.text}</li>`
+                });
+                return allComments;
+            } else {
+                return "<p>Be the first to place a comment!</p>"
+            }
+        }
+
         if (item.createdby == sessionStorage.userID) {
             result.innerHTML += `
         <div class="product-container" id="${item._id}">
@@ -93,6 +106,9 @@ let renderProducts = (products) => {
             <h3>$${item.price}</h3>
             <h3>${item.description}</h3>
             <img src="${item.img_url}"> 
+        <h4>Reviews</h4>
+        <ul class="review-box">${renderComments()}</ul>
+        <button class="comment-button" data-bs-toggle="modal" data-bs-target="#commentModal">Add Comment</button>
         </div>
         `;
         }
@@ -102,7 +118,38 @@ let renderProducts = (products) => {
     collectEditButtons();
     // running collect delete buttons function
     collectDeleteButtons();
+    // running add comment buttons function
+    collectCommentButtons();
 };
+
+
+// =================================
+//      ADD COMMENT FUNCTION
+// =================================
+// This function will send the id to the onclick listener of the submit button 
+let addComment = (productId) => {
+    const commentBtn = document.getElementById("submitComment");
+    // add a listener for the add comment button
+    commentBtn.onclick = () => {
+        console.log(productId);
+        $.ajax({
+            url: 'http://localhost:3400/postComment',
+            type: 'POST',
+            data: {
+                text: document.getElementById("productComment").value,
+                product_id: productId
+            },
+            success: () => {
+                console.log("Comment placed successfully");
+                showAllProduct();
+                $('#commentModal').modal('hide');
+            }, error: () => {
+                console.log("error, can't post comment");
+            }
+        })
+    }
+}
+
 
 
 
@@ -234,6 +281,25 @@ let collectDeleteButtons = () => {
             let currentId = deleteButtonsArray[i].parentNode.id;
             // delete product based on the id
             deleteProduct(currentId);
+        };
+    }
+};
+
+
+// ==============================================
+//         COLLECT POST COMMENT BUTTONS
+// ==============================================
+// this function will handle all our comments
+let collectCommentButtons = () => {
+    // this will return an Array, but it's a slightly different one
+    // it returns HTML "nodes" instead
+    // we'll have use a regular loop to loop over these
+    let commentButtonsArray = document.getElementsByClassName("comment-button");
+    // this will loop over every delete button
+    for (let i = 0; i < commentButtonsArray.length; i++) {
+        commentButtonsArray[i].onclick = () => {
+            let currentId = commentButtonsArray[i].parentNode.id;
+            addComment(currentId);
         };
     }
 };
