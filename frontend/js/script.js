@@ -208,7 +208,7 @@ fillEditInputs = (product, id) => {
     let imagePreview = document.getElementById('image-preview');
 
     imagePreview.innerHTML = `
-    <img src="${product.img_url}" alt="${productName}">
+    <img class="edit-modal-image" src="${product.img_url}" alt="${productName}">
     `;
 
     //=================================
