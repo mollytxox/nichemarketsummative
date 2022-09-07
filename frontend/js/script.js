@@ -7,6 +7,24 @@ const goBtn = document.getElementById("go-button");
 // const descriptionInput = document.getElementById("description-input");
 // const imageURLInput = document.getElementById("image-url-input");
 
+// =================================
+//        NAV BAR FUNCTIONS
+// =================================
+
+const navBar = document.getElementById('nav-bar');
+const navSearch = document.getElementById('nav-search');
+
+navSearch.onclick = function() {
+    navExpand();
+  }
+
+function navExpand() {
+    navBar.classList.toggle("nav-expand");
+}
+
+
+
+
 
 // =================================
 //        DISPLAY PRODUCTS
@@ -326,10 +344,12 @@ let checkLogin = () => {
         // console.log(sessionStorage.userName)
         addNewProducts();
         navContent = `
-      <span id="username">${sessionStorage.userName}</span>
+        <div class="account-button" id="nav-img-acc">
+      <span id="username">${sessionStorage.userName.toUpperCase()}</span>
       <span id="dp" style="background-image: url('${sessionStorage.profileImg}')"></span>
-      <a id="sign-out-button" href="#">Sign Out</a>
+      </div>
       `
+    //   <a id="sign-out-button" href="#">Sign Out</a>
         addNewProductDiv.innerHTML = `
       <form id="add-project-form" action="javascript:void(0)">
       <label for="name-input">Product Name: </label>
@@ -347,9 +367,11 @@ let checkLogin = () => {
         postProductBtnDiv.innerHTML = `
         <a href="login.html"><button id="go-button">Post New Product</button></a>
         `
-        navContent = `
-      <a href="login.html">Login</a>
-      <a href="signup.html">Signup</a>
+        navContent = `<div id="nav-btn-acc">
+        <a id="account-symbol" href="signup.html"><span class="material-symbols-outlined"> account_circle </span></a>
+        <button id="account-button">ACCOUNT</button>
+        </div>
+        <div id="nav-img-acc" style="display: none;"></div>
       `;
     }
     // render our logged in elements
@@ -371,3 +393,17 @@ if (sessionStorage.userID) {
         logOut();
     }
 };
+
+// const accountBtn = document.getElementById('nav-btn-acc');
+const accountImg = document.getElementById('nav-img-acc');
+const accountDetails = document.getElementById('account-details');
+
+
+
+accountImg.onclick = function() {
+    accountExpand();
+  }
+
+function accountExpand() {
+    accountDetails.classList.toggle("account-expand");
+}
