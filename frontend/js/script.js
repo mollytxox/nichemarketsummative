@@ -14,9 +14,9 @@ const goBtn = document.getElementById("go-button");
 const navBar = document.getElementById('nav-bar');
 const navSearch = document.getElementById('nav-search');
 
-navSearch.onclick = function() {
+navSearch.onclick = function () {
     navExpand();
-  }
+}
 
 function navExpand() {
     navBar.classList.toggle("nav-expand");
@@ -89,6 +89,7 @@ let addNewProducts = () => {
 
 // This function renders our products
 let renderProducts = (products) => {
+    let productId = products.id;
     console.log("the render products function is working");
     result.innerHTML = "";
     products.forEach((item) => {
@@ -97,7 +98,6 @@ let renderProducts = (products) => {
             if (item.comments.length > 0) {
                 let allComments = "";
                 item.comments.forEach((comment) => {
-                    console.log(comment.text);
                     allComments += `<li>${comment.text}</li>`
                 });
                 return allComments;
@@ -113,8 +113,11 @@ let renderProducts = (products) => {
             <h3>$${item.price}</h3>
             <h3>${item.description}</h3>
             <img src="${item.img_url}"> 
-            <i class="bi bi-trash delete-button"></i>
+            <i class="bi bi-trash trash-button" id="delete" data-bs-toggle="modal" data-bs-target="#deleteModal"></i>
             <i class="bi bi-pencil edit-button" data-bs-toggle="modal" data-bs-target="#editModal"></i>
+            <h4>Reviews</h4>
+        <ul class="review-box">${renderComments()}</ul>
+        <button class="comment-button" data-bs-toggle="modal" data-bs-target="#commentModal">Add Comment</button>
         </div>
         `;
         } else {
@@ -138,6 +141,12 @@ let renderProducts = (products) => {
     collectDeleteButtons();
     // running add comment buttons function
     collectCommentButtons();
+
+    let deleteBtn = document.getElementById('submitDelete');
+    deleteBtn.onclick = () => {
+        console.log(products.this);
+        populateDeleteModal(productId);
+    }
 };
 
 
@@ -192,6 +201,31 @@ populateEditModal = (productId) => {
         }
     })
 };
+
+
+populateDeleteModal = (productId) => {
+    $.ajax({
+        url: `http://localhost:3400/product/${productId}`,
+        type: 'GET',
+        success: (productData) => {
+            console.log("Product was found!")
+            console.log(productData);
+            renderDeleteModal(productData, productId);
+        },
+        error: () => {
+            console.log(error)
+        }
+    })
+};
+
+let renderDeleteModal = (productData) => {
+    let productId = productData._id;
+    let deleteBtn = document.getElementById('submitDelete');
+    deleteBtn.onclick = () => {
+        deleteProduct(productId);
+        console.log(productId);
+    }
+}
 
 //this function will handle all our edits and add a click listener 
 //if we click on an edit button it will get the id from the parent node (the div around around our prodcuts)
@@ -292,13 +326,15 @@ let collectDeleteButtons = () => {
     // this will return an Array, but it's a slightly different one
     // it returns HTML "nodes" instead
     // we'll have use a regular loop to loop over these
-    let deleteButtonsArray = document.getElementsByClassName("delete-button");
+    let deleteButtonsArray = document.getElementsByClassName("trash-button");
     // this will loop over every delete button
     for (let i = 0; i < deleteButtonsArray.length; i++) {
         deleteButtonsArray[i].onclick = () => {
-            let currentId = deleteButtonsArray[i].parentNode.id;
+            let productId = deleteButtonsArray[i].parentNode.id;
+            populateDeleteModal(productId);
             // delete product based on the id
-            deleteProduct(currentId);
+            // deleteProduct(currentId);
+            console.log(productId);
         };
     }
 };
@@ -349,7 +385,7 @@ let checkLogin = () => {
       <span id="dp" style="background-image: url('${sessionStorage.profileImg}')"></span>
       </div>
       `
-    //   <a id="sign-out-button" href="#">Sign Out</a>
+        //   <a id="sign-out-button" href="#">Sign Out</a>
         addNewProductDiv.innerHTML = `
       <form id="add-project-form" action="javascript:void(0)">
       <label for="name-input">Product Name: </label>
@@ -400,9 +436,9 @@ const accountDetails = document.getElementById('account-details');
 
 
 
-accountImg.onclick = function() {
+accountImg.onclick = function () {
     accountExpand();
-  }
+}
 
 function accountExpand() {
     accountDetails.classList.toggle("account-expand");
