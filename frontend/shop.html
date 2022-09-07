@@ -89,6 +89,78 @@
     <!-- Result div that stores all rendered products  -->
     <div id="result"></div>
 
+     <!-- Edit Modal -->
+     <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Listing</h5></strong>
+                    <div id="image-preview"></div>
+                    <div id="projectForm">
+
+                        <label for="productName">TITLE</label>
+                        <br>
+                        <input class="edit-modal-input" type="text" id="productName" name="productName">
+                        <br></br>
+
+                        <label for="productPrice">PRICE</label>
+                        <br>
+                        <input class="edit-modal-input" type="text" id="productPrice" name="productPrice">
+                        <br></br>
+
+                        <label for="productDescription">DESCRIPTION</label>
+                        <br>
+                        <input class="edit-modal-input" type="text" id="productDescription" name="productDescription">
+                        <br></br>
+
+                        <label for="imgUrl">PRODUCT IMAGE</label>
+                        <br>
+                        <input class="edit-modal-input" type="text" id="imgUrl" name="imgUrl">
+                        <br></br>
+
+                    </div>
+                    <button type="button" class="btn btn-secondary edit-modal-button1"
+                        data-bs-dismiss="modal">CANCEL</button>
+                    <button id="updateProduct" name="projectButton" type="submit"
+                        class="btn btn-primary edit-modal-button2" data-bs-dismiss="modal">CONFIRM</button>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- End of edit Modal  -->
+
+    <!-- Post Comment Modal -->
+    <div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="commentModalLabel">Post a comment:</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="projectForm">
+                        <label for="productComment">Enter your comment:</label>
+                        <textarea class="form-control" id="productComment" rows="4"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="submitComment" name="submitCommentButton" type="submit" class="btn btn-primary"
+                        data-bs-dismiss="modal">Submit Comment</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- End of Post Comment Modal  -->
+
+
     <!-- jquery -->
     <script
       src="https://kit.fontawesome.com/ab86417da5.js"
