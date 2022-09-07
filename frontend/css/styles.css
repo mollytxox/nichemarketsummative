@@ -197,6 +197,89 @@ label {
   white-space: nowrap;
 }
 
+.modal-content {
+  border-radius: 0px;
+}
+
+.modal-header {
+  background-color: #7D876E;
+  border-radius: 0px;
+}
+
+.btn-close {
+  background: url("../img/whiteclosex.png") center/2em auto no-repeat;
+  opacity: 1;
+}
+
+.modal-title {
+  margin-bottom: 15px;
+  line-height: var(--bs-modal-title-line-height);
+  text-align: center;
+  font-size: 30px;
+  font-family: "Sen", sans-serif;
+  font-weight: bold;
+}
+
+.edit-modal-image {
+  width: 130px;
+  height: 130px;
+  border-radius: 100px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 25px;
+}
+
+#projectForm {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: bold;
+}
+
+label {
+  display: inline-block;
+  margin-left: 2px;
+  font-size: 17px;
+  margin-bottom: 5px;
+}
+
+.edit-modal-input {
+  all: unset;
+  width: 97%;
+  margin-left: 5px;
+  border-radius: 1px;
+  height: 40px;
+  padding-left: 5px;
+  color: black;
+  font-size: 14px;
+  font-weight: 400;
+  border-color: none;
+  border: solid 1px black;
+}
+
+.modal-body {
+  background-color: #FDFBFC;
+}
+
+.edit-modal-button1,
+.edit-modal-button2 {
+  background-color: #1C2536;
+  color: white;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  border-radius: 0px;
+  font-size: 13px;
+  padding: 14px;
+  width: 43%;
+  border: none;
+}
+
+.edit-modal-button1 {
+  margin-left: 5px;
+}
+
+.edit-modal-button2 {
+  margin-left: 41px;
+}
+
 body {
   background: #DAD5CA;
 }
@@ -224,7 +307,7 @@ nav {
   grid-template-columns: 5fr 1fr 2fr;
   grid-template-rows: 40px 160px;
   grid-template-areas: "nav-options nav-logo nav-tools";
-  transition: 0.4s;
+  transition: .4s;
 }
 
 .nav-options {
@@ -233,12 +316,14 @@ nav {
   align-items: center;
   justify-content: space-between;
 }
+
 .nav-options ul {
   all: unset;
   display: flex;
   justify-content: space-between;
   width: 100%;
 }
+
 .nav-options li {
   color: #1C2536;
   font-family: "Plus Jakarta Sans", sans-serif;
@@ -255,6 +340,7 @@ nav {
   align-items: center;
   justify-content: space-between;
 }
+
 .nav-tools span {
   display: flex;
   font-size: 2em;
@@ -266,6 +352,7 @@ nav {
   display: flex;
   align-items: center;
 }
+
 .search-button p {
   margin: 0;
 }
@@ -273,7 +360,7 @@ nav {
 #search-type {
   display: none;
   font-size: 1em;
-  margin-right: 0.5em;
+  margin-right: .5em;
   font-family: "Plus Jakarta Sans", sans-serif;
   color: #7D876E;
 }
@@ -289,6 +376,7 @@ nav {
   align-items: center;
   z-index: 99;
 }
+
 .account-button #dp {
   width: 1.25em;
   height: 1.25em;
@@ -336,6 +424,7 @@ nav {
   justify-content: center;
   align-items: center;
 }
+
 .account-functions p {
   margin-bottom: 0;
   font-family: "Plus Jakarta Sans", sans-serif;
@@ -355,7 +444,7 @@ nav {
 }
 
 .search-row {
-  grid-column: 1/4;
+  grid-column: 1 / 4;
   text-align: center;
   padding: 33px;
   left: 0;
@@ -370,6 +459,7 @@ nav {
 .search-message {
   margin-bottom: 16px;
 }
+
 .search-message h2 {
   font-family: "Plus Jakarta Sans", sans-serif;
   font-size: 1.3em;
@@ -384,6 +474,7 @@ nav {
   position: relative;
   width: 800px;
 }
+
 .search-bar i {
   display: flex;
   gap: 20%;
@@ -414,12 +505,12 @@ nav {
   background-color: #7D876E;
   right: 100%;
   width: 0;
-  transition: width 0.4s ease-in-out;
+  transition: width .4s ease-in-out;
 }
 
 .search-bar:hover::after {
   width: 100%;
-  transition: width 0.4s ease-in-out;
+  transition: width .4s ease-in-out;
 }
 
 #search-bar-input {
@@ -439,7 +530,7 @@ nav {
 
 .nav-expand {
   max-height: 300px;
-  transition: 0.4s;
+  transition: .4s;
 }
 
 .nav-padding {
@@ -454,6 +545,7 @@ nav {
     display: block;
   }
 }
+
 @media only screen and (min-width: 1024px) {
   .nav-grid {
     grid-template-columns: 1fr 1fr 1fr;
@@ -479,6 +571,7 @@ nav {
     display: block;
   }
 }
+
 * {
   box-sizing: border-box;
   text-decoration: none;
@@ -506,3 +599,4 @@ img {
   text-align: center;
   margin: 5px;
 }
+
