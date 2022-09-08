@@ -24,8 +24,6 @@ function navExpand() {
 
 
 
-
-
 // =================================
 //        DISPLAY PRODUCTS
 // =================================
@@ -110,6 +108,7 @@ let renderProducts = (products) => {
             result.innerHTML += `
         <div class="product-container" id="${item._id}">
             <h3>${item.name}</h3>
+            <h3>${item.username}</h3>
             <h3>$${item.price}</h3>
             <h3>${item.description}</h3>
             <img src="${item.img_url}"> 
@@ -177,9 +176,6 @@ let addComment = (productId) => {
     }
 }
 
-
-
-
 // =================================
 //COLLECT EDIT BUTTONS & EDIT FUNCTION
 // =================================
@@ -202,6 +198,9 @@ populateEditModal = (productId) => {
     })
 };
 
+// =================================
+//     POPULATING DELETE MODALS
+// =================================
 
 populateDeleteModal = (productId) => {
     $.ajax({
@@ -376,8 +375,6 @@ let checkLogin = () => {
     const userDetails = document.getElementById("user-details");
     let navContent;
     if (sessionStorage.userID) {
-        // console.log("You're logged in")
-        // console.log(sessionStorage.userName)
         addNewProducts();
         navContent = `
         <div class="account-button" id="nav-img-acc">
