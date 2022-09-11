@@ -77,21 +77,84 @@
     }
 }
 
-#result {
+.gallery-cont {
     @include flex-column;
 
-    .product-container {
-        width: 100%;
-        height: 250px;
-        background-color: white;
-        border: 2px solid rgb(67, 60, 60);
-        font-size: 12px;
-        text-align: center;
+    .gallery {
+        padding: 20px;
 
-        img {
-            width: 100px;
-            height: auto;
-            object-fit: cover;
+    }
+
+    #gallery0 {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(1, 1fr);
+        gap: 5px;
+
+        .product-container {
+            width: 100%;
+            height: 400px;
+            background-color: white;
+            border: 2px solid rgb(67, 60, 60);
+            font-size: 12px;
+            text-align: center;
+            margin: 0;
+
+            img {
+                width: 100px;
+                height: auto;
+                object-fit: cover;
+            }
+        }
+    }
+
+    #gallery1 {
+        @include flex-column;
+
+        .product-container {
+            width: 100%;
+            height: 400px;
+            background-color: white;
+            border: 2px solid rgb(67, 60, 60);
+            font-size: 12px;
+            text-align: center;
+            margin: 0;
+
+            img {
+                width: 100px;
+                height: auto;
+                object-fit: cover;
+            }
+        }
+    }
+
+    #gallery2 {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        gap: 5px;
+
+        .product-container {
+
+            width: 100%;
+            height: 400px;
+            background-color: white;
+            border: 2px solid rgb(67, 60, 60);
+            font-size: 12px;
+            text-align: center;
+            margin: 0;
+
+            img {
+                width: 100px;
+                height: auto;
+                object-fit: cover;
+            }
+        }
+
+        .product-container:nth-child(1) {
+            grid-column-start: 1;
+            grid-column-end: 3;
+
         }
     }
 }
